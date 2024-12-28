@@ -4,7 +4,7 @@ const mongoose=require('mongoose')
 const config = require('./utils/config')
 const middleware=require('./utils/middleware')
 const logger = require('./utils/logger')
-
+const fishRouter=require('./controllers/fishRoute')
 const app=express()
 
 mongoose.set('strictQuery',false)
@@ -24,6 +24,12 @@ app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
+app.use('/api/fish',fishRouter)
+
+app.get('/api/test',(req,res) => {
+  res.json({ message: 'api is working!'})
+})
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
