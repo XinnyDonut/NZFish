@@ -9,6 +9,7 @@ const userSchema=new mongoose.Schema({
   name:String,
   passwordHash:{
     type:String,
+    minLength:5,
     required:true
   },
   cookingLogs:[
@@ -24,8 +25,7 @@ userSchema.set('toJSON',{
     returnedObj.id=returnedObj._id.toString()
     delete returnedObj._id
     delete returnedObj.passwordHash
-  },
-  versionKey:false
+  }
 })
 
 module.exports=mongoose.model('User',userSchema)

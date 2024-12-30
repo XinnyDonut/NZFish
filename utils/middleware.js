@@ -1,5 +1,6 @@
 
 const logger=require('../utils/logger')
+const jwt=require('jsonwebtoken')
 
 const requestLogger=(request,response,next) => {
   console.log('request logger:')
@@ -28,15 +29,46 @@ const errorHandler = (error, request, response, next) => {
   }else if (error.name ===  'JsonWebTokenError') {
     return response.status(401).json({ error: 'token invalid' })
   }else if (error.name === 'TokenExpiredError') {
-    return response.status(401).json({
-      error: 'token expired'
-    })
+    return response.status(401).json({ error: 'token expired' })
+  }else if (error.name === 'NotFoundError') {
+    return response.status(404).json({ error: 'resource not found' })
   }
   next(error)
 }
 
+
+const tokenExtractor=(request,response,next) =>{
+  const auth=request.get('authorization')
+  if(auth&&auth.startsWith('Bearer ')){
+    request.token=auth.replace('Bearer ','')
+  }else{
+    request.token=null
+  }
+  next()
+}
+
+const userExtractor = (request,response,next) => {
+  const auth=request.get('authorization')
+  if(auth&&auth.startsWith('Bearer ')){
+    const token=auth.replace('Bearer ','')
+    let decodedToken
+    try {
+      decodedToken=jwt.verify(token,process.env.SECRET)
+      request.user=decodedToken.username
+    }catch(err){
+      return next(err)
+    }
+  }else{
+    request.user=null
+  }
+  next()
+}
+
+
 module.exports={
   requestLogger,
   unknownEndpoint,
-  errorHandler }
+  errorHandler,
+  userExtractor,
+  tokenExtractor }
 

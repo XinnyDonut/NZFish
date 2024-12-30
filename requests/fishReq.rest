@@ -1,0 +1,16 @@
+### Add a fish
+POST http://localhost:3001/api/fish
+Content-Type: application/json
+
+{
+  "name": "Snapper",
+  "MaoriName": "Tāmure",
+  "description": "Common coastal fish in NZ",
+  "imageUrl": "https://example.com/snapper.jpg"
+}
+
+###Get all
+GET http://localhost:3001/api/fish
+
+###Get by id
+GET http://localhost:3001/api/fish/6771b1f1ec0aa062e84409af
