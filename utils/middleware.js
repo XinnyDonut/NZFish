@@ -1,4 +1,3 @@
-
 const logger=require('../utils/logger')
 const jwt=require('jsonwebtoken')
 
@@ -47,22 +46,19 @@ const tokenExtractor=(request,response,next) =>{
   next()
 }
 
-const userExtractor = (request,response,next) => {
-  const auth=request.get('authorization')
-  if(auth&&auth.startsWith('Bearer ')){
-    const token=auth.replace('Bearer ','')
-    let decodedToken
-    try {
-      decodedToken=jwt.verify(token,process.env.SECRET)
-      request.user=decodedToken.username
-    }catch(err){
-      return next(err)
+const userExtractor = async (req, res, next) => {
+  try {
+    const decodedToken = jwt.verify(req.token, process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({ error: 'token invalid' })
     }
-  }else{
-    request.user=null
+    req.user = decodedToken
+    next()
+  } catch (error) {
+    next(error)
   }
-  next()
 }
+
 
 
 module.exports={

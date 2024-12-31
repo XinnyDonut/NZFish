@@ -7,6 +7,7 @@ const logger = require('./utils/logger')
 const fishRouter=require('./controllers/fishRoute')
 const userRouter=require('./controllers/userRoute')
 const loginRouter=require('./controllers/loginRoute')
+const cookingLogRouter=require('./controllers/cookingLogRoute')
 const app=express()
 
 mongoose.set('strictQuery',false)
@@ -30,11 +31,7 @@ app.use(middleware.tokenExtractor)
 app.use('/api/fish',fishRouter)
 app.use('/api/login',loginRouter)
 app.use('/api/users',userRouter)
-
-app.get('/api/test',(req,res) => {
-  res.json({ message: 'api is working!'})
-})
-
+app.use('/api/logs',cookingLogRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 

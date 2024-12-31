@@ -1,11 +1,10 @@
-const jwt=require('jsonwebtoken')
 const bcrypt=require('bcrypt')
 const userRouter=require('express').Router()
 const User= require('../models/user')
 const middleware=require('../utils/middleware')
 
 //register
-userRouter.post('./register', async(req,res,next) => {
+userRouter.post('/register', async(req,res,next) => {
   try{
     const { username,name,password }=req.body
     const saltRound=10
@@ -30,7 +29,13 @@ userRouter.post('./register', async(req,res,next) => {
 userRouter.get('/profile',middleware.userExtractor,async (req,res,next) => {
   try{
     const user=await User.findById(req.user.id)
-      .populate('cookingLogs')//need to work on the populate once cooklog finish
+      .populate({
+        path: 'cookingLogs',
+        populate: {
+          path: 'fish',
+          select: 'name imageUrl'
+        }
+      })
     res.json(user)
   }catch(err){
     next(err)
@@ -59,5 +64,15 @@ userRouter.get('/:id',async(req,res,next) => {
     next(err)
   }
 })
+
+userRouter.get('/',async(req,res,next) => {
+  try{
+    const users=await User.find({})
+    res.json(users)
+  }catch(err){
+    next(err)
+  }
+})
+
 
 module.exports=userRouter
