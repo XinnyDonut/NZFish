@@ -38,6 +38,20 @@ cookingLogRouter.post('/', userExtractor, async (req, res, next) => {
   }
 })
 
+// Get all logs for a specific fish
+cookingLogRouter.get('/fish/:fishId', async (req, res, next) => {
+  try {
+    const logs = await CookingLog.find({ fish: req.params.fishId })
+      .populate('fish', { name: 1, imageUrl: 1 })
+      .populate('user', { username: 1, name: 1 })
+      .sort({ createdAt: -1 })
+
+    res.json(logs)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //Get all your own logs
 cookingLogRouter.get('/my',userExtractor,async (req,res,next) => {
   try{

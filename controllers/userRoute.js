@@ -25,7 +25,7 @@ userRouter.post('/register', async(req,res,next) => {
   }
 })
 
-//private route
+//private route,get your own profile
 userRouter.get('/profile',middleware.userExtractor,async (req,res,next) => {
   try{
     const user=await User.findById(req.user.id)
@@ -42,7 +42,7 @@ userRouter.get('/profile',middleware.userExtractor,async (req,res,next) => {
   }
 })
 
-//public route
+//public route,other users can see your log
 userRouter.get('/:id',async(req,res,next) => {
   try {
     const user = await User.findById(req.params.id)
