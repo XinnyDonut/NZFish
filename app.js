@@ -8,6 +8,7 @@ const fishRouter=require('./controllers/fishRoute')
 const userRouter=require('./controllers/userRoute')
 const loginRouter=require('./controllers/loginRoute')
 const cookingLogRouter=require('./controllers/cookingLogRoute')
+const path = require('path')
 const app=express()
 
 mongoose.set('strictQuery',false)
@@ -32,6 +33,9 @@ app.use('/api/fish',fishRouter)
 app.use('/api/login',loginRouter)
 app.use('/api/users',userRouter)
 app.use('/api/logs',cookingLogRouter)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
