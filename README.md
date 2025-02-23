@@ -3,8 +3,8 @@ Backend repository for the NZ Fish Guide application - a platform for exploring 
 
 ## Live Application & Respositories
 - **Live Demo:** https://nzfish.onrender.com
-> *Please note the Live Demon might take up to 40 seconds to load*
-- **Backend Repository:** https://github.com/XinnyDonut/NZFish
+
+- **Front Repository:** https://github.com/XinnyDonut/NZFishFront
 
 ## Tech Stack
 - Node.js & Express.js
