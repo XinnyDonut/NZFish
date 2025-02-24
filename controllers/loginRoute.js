@@ -6,6 +6,7 @@ const User= require('../models/user')
 loginRouter.post('/',async(req,res,next) => {
   try{
     const{ username,password }=req.body
+    //Mongoose query that returns the first user that match the userName, or null if none found
     const user= await User.findOne({ username })
     const passwordCorrect=user===null
       ?false

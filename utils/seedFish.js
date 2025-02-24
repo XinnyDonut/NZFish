@@ -1,5 +1,3 @@
-// utils/seedFish.js
-require('dotenv').config()
 const mongoose = require('mongoose')
 const Fish = require('../models/fish')
 const config = require('../utils/config')
@@ -65,11 +63,11 @@ const seedFish = async () => {
     await mongoose.connect(config.MONGODB_URL)
     console.log('Connected to MongoDB')
 
-    // Clear existing fish data
+    // clear existing fish data
     await Fish.deleteMany({})
     console.log('Cleared existing fish data')
 
-    // Insert new fish data
+    // Insert fish data
     await Fish.insertMany(initialFish)
     console.log('Successfully seeded fish data')
 

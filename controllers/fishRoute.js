@@ -11,6 +11,8 @@ fishRouter.get('/', async (req, res,next) => {
   }
 })
 
+//use future if adding admin features
+
 fishRouter.get('/:id', async (req, res,next) => {
   console.log(req.params)
   try{

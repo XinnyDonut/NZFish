@@ -13,11 +13,15 @@ userRouter.post('/register', async(req,res,next) => {
       throw new Error('password must be at least 5 characters long')
     }
     const passwordHash=await bcrypt.hash(password,saltRound)
+    //user is a mongoose document instance
     const user= new User({
       username,
       name,
       passwordHash
     })
+    //await user.save() is a mongoose method, it validates against the schema,
+    // perform the actual MongoDB insert,
+    // and return a Promise tgat resolves to the saved document
     const savedUser= await user.save()
     res.status(201).json(savedUser)
   }catch(err){

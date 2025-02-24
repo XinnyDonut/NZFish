@@ -52,7 +52,7 @@ cookingLogRouter.get('/fish/:fishId', async (req, res, next) => {
   }
 })
 
-//Get all your own logs
+//Get all your own logs--haven't implemented yet
 cookingLogRouter.get('/my',userExtractor,async (req,res,next) => {
   try{
     const logs=await CookingLog.find({ user:req.user.id })
@@ -98,7 +98,7 @@ cookingLogRouter.put('/:id',userExtractor,async(req,res,next) => {
   }
 })
 
-//delete your own log
+//delete your own log--not implemented yet
 cookingLogRouter.delete('/:id',userExtractor,async (req,res,next) => {
   try{
     const log=await CookingLog.findById(req.params.id)
@@ -113,6 +113,8 @@ cookingLogRouter.delete('/:id',userExtractor,async (req,res,next) => {
     await CookingLog.findByIdAndDelete(req.params.id)
     await User.findByIdAndUpdate(req.user.id,
       { $pull: { cookingLogs: req.params.id } }
+      //this is MongoDb operator that removes elements from an array
+      //It means remove that id from cookinglogs array
     )
     res.status(204).end()
   }catch(err){

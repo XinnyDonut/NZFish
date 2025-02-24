@@ -4,7 +4,7 @@ Backend repository for the NZ Fish Guide application - a platform for exploring 
 ## Live Application & Respositories
 - **Live Demo:** https://nzfish.onrender.com
 
-- **Front Repository:** https://github.com/XinnyDonut/NZFishFront
+- **Frontend Repository:** https://github.com/XinnyDonut/NZFishFront
 
 ## Tech Stack
 - Node.js & Express.js
